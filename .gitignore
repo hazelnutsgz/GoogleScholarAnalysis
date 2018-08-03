@@ -1,0 +1,6 @@
+/gs_result/
+*.zip
+/relevant/
+/processed_data/
+.idea/
+*.txt

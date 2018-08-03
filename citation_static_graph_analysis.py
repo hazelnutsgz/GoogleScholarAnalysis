@@ -36,7 +36,7 @@ def subset_graph_metrics(G, pagerank_dict, node_list):
     avg_deg = numpy.average(sorted(G.degree(node_list).values()))
     avg_cc = numpy.average(networkx.clustering(G, node_list).values())
     #print pagerank_dict
-    pagerank_values = [];
+    pagerank_values = []
     for x in node_list:
     	#print x
     	pagerank_values.append(pagerank_dict[x])
