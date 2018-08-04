@@ -25,6 +25,8 @@ t_20_seq = []; t_50_seq= []; t_80_seq = [];
 
 f_h_result = open("result_h_evolution.txt", "w")
 
+
+##Accumulate zero to twenty years
 for i in range(1, 20):
 	h_20_seq.append(percentile(sorted(h_data[i]), 20)); f_h_result.write(str(percentile(sorted(h_data[i]), 20))+" ")
 	h_50_seq.append(percentile(sorted(h_data[i]), 50)); f_h_result.write(str(percentile(sorted(h_data[i]), 50))+" ")

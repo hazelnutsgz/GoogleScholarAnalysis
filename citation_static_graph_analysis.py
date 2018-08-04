@@ -45,9 +45,6 @@ def subset_graph_metrics(G, pagerank_dict, node_list):
     print len(node_list), median_deg, '%.3f' % avg_deg, '%.3f' % avg_cc, numpy.average(pagerank_values)
     return
 
-min_year = 1990
-max_year = 2012
-
 f_nodes = open("processed_data/gs_graph_nodes.txt", "r")
 f_edges = open("processed_data/gs_collaboration_graph.txt", "r")
 
@@ -120,10 +117,6 @@ for x in all_country_nodes:
 
 pagerank_dict = pagerank(G_all, alpha=0.9)
 
-
-
-
-
 graph_metrics(G_all, pagerank_dict)
 
 #'''
@@ -171,11 +164,11 @@ print '->Avg. Total= %.2f' % numpy.average(female_total), 'Avg. H-idx= %.2f' % n
 
 print '== Academic Titles =='
 
-for current_country in range(1, 4):
-    print current_country, ":",	
+for current_title in range(1, 4):
+    print current_title, ":",	
     curr_node_list = []; current_total = []; current_hidx = []; current_gidx = [];
     for ii in range(0, len(node_country_id)):
-        if (node_country_id[ii] == current_country):
+        if (node_country_id[ii] == current_title):
             curr_node_list.append(ii)
             current_total.append(all_total[ii]);current_hidx.append(all_hidx[ii]); current_gidx.append(all_gidx[ii]);
                     

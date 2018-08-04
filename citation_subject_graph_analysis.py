@@ -51,8 +51,6 @@ def subset_graph_metrics(G, node_list, meta_info):
 		numpy.savetxt('result_bio_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
 	return
 
-min_year = 1990
-max_year = 2012
 
 f_nodes = open("processed_data/gs_graph_nodes.txt", "r")
 f_edges = open("processed_data/gs_collaboration_graph.txt", "r")

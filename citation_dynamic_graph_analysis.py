@@ -1,7 +1,9 @@
 import sys
 sys.path.append('/home/home4/ychen/Code/python-lib') # add the path of networkx in Duke-CS cluster
-from matplotlib import pyplot as plt
 
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
 
 import random
 from networkx import *
@@ -17,17 +19,18 @@ def effective_diamater(path_length_seq):
     sorted_seq = sorted(path_length_seq)
     return sorted_seq[int(len(path_length_seq)*0.9)]
 
-#def graph_metrics(G):
-	# nodes, edges, avg deg, avg cc
-    #	median_deg = numpy.median(sorted(G.degree().values()))
-    #	avg_deg = numpy.average(sorted(G.degree().values()))
-    #	avg_cc = networkx.average_clustering(G)
-    #print G.number_of_nodes(), G.number_of_edges(), G.number_of_edges() * 2.0 / (G.number_of_nodes() * (G.number_of_nodes() - 1)), median_deg, "%.2f" % avg_deg, "%.2f" % avg_cc
-#	return
+def graph_metrics(G):
+	## nodes, edges, avg deg, avg cc
+    median_deg = numpy.median(sorted(G.degree().values()))
+    avg_deg = numpy.average(sorted(G.degree().values()))
+    avg_cc = networkx.average_clustering(G)
+    print G.number_of_nodes(), G.number_of_edges(), G.number_of_edges() * 2.0 / (G.number_of_nodes() * (G.number_of_nodes() - 1)), median_deg, "%.2f" % avg_deg, "%.2f" % avg_cc
+
 
 
 min_year = 1990
-max_year = 2015
+# max_year = 2015
+max_year = 1993
 
 
 f_dyn =open("processed_data/gs_collaboration_yearly_graph.txt", "r")
@@ -81,6 +84,8 @@ for current_yr in range(min_year, max_year+1):
 #            if (min_possible_year <= current_yr):
             if (min_possible_year + random.randint(0, delta_year+1) <= current_yr):
                 G_current.add_edge(int(line_info[1]), int(line_info[2]))
+
+
     print current_yr, ":",
     print G_current.number_of_nodes(), G_current.number_of_edges(),
     print G_current.number_of_edges() * 2.0 / (G_current.number_of_nodes()*(G_current.number_of_nodes()-1)), # density
@@ -178,6 +183,9 @@ for x in all_edges:
 
 graph_metrics(G_all)
 
+
+
+##Analysis of seperate year
 for current_yr in range(min_year, max_year+1):
 	print current_yr, ":",
 	G_tmp = Graph()
