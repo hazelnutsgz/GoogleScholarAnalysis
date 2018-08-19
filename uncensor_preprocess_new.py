@@ -14,7 +14,8 @@ from citation_library import *
 reload(sys)
 sys.setdefaultencoding('utf-8')
  
- 
+NUM_OF_CORE = 12
+
 '''
 bioinformatics
 complex systems
@@ -67,22 +68,22 @@ neuro_total_citation = []; neuro_h_index = []; neuro_i10_index = []; neuro_g_ind
 paper_data = {}
 year_user = set([]) #element: (1950, 1), (2012, 50), (yr, id)
  
-f_profile = open("gs_profile.txt", "w")
-f_name = open("gs_name.txt", "w")
-f_year = open("gs_earliest_year.txt", "w")
-f_google_id = open("gs_google_id.txt", "w")
+f_profile = open("unprocessed_data/gs_profile.txt", "w")
+f_name = open("unprocessed_data/gs_name.txt", "w")
+f_year = open("unprocessed_data/gs_earliest_year.txt", "w")
+f_google_id = open("unprocessed_data/gs_google_id.txt", "w")
  
  
-f_h_age = open("gs_h_age.txt", "w") # h-index vs experience
-f_g_age = open("gs_g_age.txt", "w") # g-index vs experience
-f_t_age = open("gs_t_age.txt", "w") # total citation vs experience
+f_h_age = open("unprocessed_data/gs_h_age.txt", "w") # h-index vs experience
+f_g_age = open("unprocessed_data/gs_g_age.txt", "w") # g-index vs experience
+f_t_age = open("unprocessed_data/gs_t_age.txt", "w") # total citation vs experience
  
  
  
-f_title = open("gs_title.txt", "w") # academic title
-f_h_idx = open("gs_h_idx.txt", "w")
-f_g_idx = open("gs_g_idx.txt", "w")
-f_t_idx = open("gs_t_idx.txt", "w")
+f_title = open("unprocessed_data/gs_title.txt", "w") # academic title
+f_h_idx = open("unprocessed_data/gs_h_idx.txt", "w")
+f_g_idx = open("unprocessed_data/gs_g_idx.txt", "w")
+f_t_idx = open("unprocessed_data/gs_t_idx.txt", "w")
 #f_subject = open("gs_subject.txt", "w")
  
 country_list = []
@@ -102,8 +103,8 @@ for x in filename:
  
  
 # removed on Jul. 23, 2015: all authors
-        if (verified_str[0] == 'n'):
-            continue
+        # if (verified_str[0] == 'n'):
+        #     continue
  
  
 #       if (verified_str[-8:] != 'duke.edu'):
@@ -210,18 +211,12 @@ for x in filename:
             f_profile.write('1 ')
         else:
             f_profile.write('0 ')
-
+ 
         if (verified_str.find("phys") >= 0 or affilation_str.find("physics") >= 0 or has_physics_keyword(keyword_str) == 1 ):
-            f_profile.write('1')
-        else:
-            f_profile.write('0')
-
-        ##Socialogy
-        if (verified_str.find("soc") >= 0 or affilation_str.find("physics") >= 0 or has_physics_keyword(keyword_str) == 1 ):
             f_profile.write('1\n')
         else:
             f_profile.write('0\n')
-
+ 
         total=total+1
  
 f_profile.close()
@@ -238,13 +233,13 @@ print '####'
  
 #year_summary(year_user)
  
-compute_collaboration_graph = 0
+compute_collaboration_graph = 1
  
 if (compute_collaboration_graph == 1):
     print datetime.now()
-    f_node_list = open("gs_graph_nodes.txt", "w")
-    f_country_node_list = open("gs_country_graph_nodes.txt", "w")
-    # f_yr_node_list = open("gs_graph_yr_nodes.txt", "w")
+    f_node_list = open("unprocessed_data/gs_graph_nodes.txt", "w")
+    f_country_node_list = open("unprocessed_data/gs_country_graph_nodes.txt", "w")
+    f_yr_node_list = open("unprocessed_data/gs_graph_yr_nodes.txt", "w")
  
     for i in range(0, total):
         f_node_list.write(str(i)+"\n")
@@ -255,27 +250,17 @@ if (compute_collaboration_graph == 1):
     f_country_node_list.close()
     #f_yr_node_list.close()
      
-    f_weighted_graph = open("gs_weighted_collaboration_graph.txt", "w")
-    f_graph = open("gs_collaboration_graph.txt", "w")
-    f_yr_graph = open("gs_collaboration_yearly_graph.txt", "w")
+    f_weighted_graph = open("unprocessed_data/gs_weighted_collaboration_graph.txt", "w")
+    f_graph = open("unprocessed_data/gs_collaboration_graph.txt", "w")
+    f_yr_graph = open("unprocessed_data/gs_collaboration_yearly_graph.txt", "w")
  
     cmdargs = str(sys.argv)
     if (len(sys.argv) == 2):
-        if (sys.argv[1] == '1'):
-            f_graph = open("gs_collaboration_graph1.txt", "w")
-            f_yr_graph = open("gs_collaboration_yearly_graph1.txt", "w")
-        elif (sys.argv[1] == '2'):  
-            f_graph = open("gs_collaboration_graph2.txt", "w")
-            f_yr_graph = open("gs_collaboration_yearly_graph2.txt", "w")
-        elif (sys.argv[1] == '3'):             
-            f_graph = open("gs_collaboration_graph3.txt", "w")
-            f_yr_graph = open("gs_collaboration_yearly_graph3.txt", "w")
-        elif (sys.argv[1] == '0'): 
-            f_graph = open("gs_collaboration_graph0.txt", "w")
-            f_yr_graph = open("gs_collaboration_yearly_graph0.txt", "w")
+        f_graph = open("unprocessed_data/gs_collaboration_graph" + sys.argv[1] + ".txt", "w")
+        f_yr_graph = open("unprocessed_data/gs_collaboration_yearly_graph" + sys.argv[1] + ".txt", "w")
     else:
-        f_yr_graph = open("gs_collaboration_yearly_graph.txt", "w")
-        f_graph = open("gs_collaboration_graph.txt", "w")
+        f_yr_graph = open("unprocessed_data/gs_collaboration_yearly_graph.txt", "w")
+        f_graph = open("unprocessed_data/gs_collaboration_graph.txt", "w")
  
     #print 'Number of arguments:', len(sys.argv), 'arguments.'
     #print 'Argument List:', str(sys.argv)
@@ -286,21 +271,10 @@ if (compute_collaboration_graph == 1):
     for i in range(0, total):
         #f_weighted_graph = open("gs_weighted_collaboration_graph.txt", "a")
         if (len(sys.argv) == 2):
-            if (i % 4 != int(sys.argv[1])):
+            if (i % NUM_OF_CORE != int(sys.argv[1])):
                 continue
-            if (sys.argv[1] == '1'):
-                f_graph = open("gs_collaboration_graph1.txt", "a")
-                f_yr_graph = open("gs_collaboration_yearly_graph1.txt", "a")
-            elif (sys.argv[1] == '2'):
-                f_graph = open("gs_collaboration_graph2.txt", "a")
-                f_yr_graph = open("gs_collaboration_yearly_graph2.txt", "a")
-            elif (sys.argv[1] == '3'):
-                f_graph = open("gs_collaboration_graph3.txt", "a")
-                f_yr_graph = open("gs_collaboration_yearly_graph3.txt", "a")
-            elif (sys.argv[1] == '0'):
-                f_graph = open("gs_collaboration_graph0.txt", "a")
-                f_yr_graph = open("gs_collaboration_yearly_graph0.txt", "a")
- 
+            f_graph = open("unprocessed_data/gs_collaboration_graph" + sys.argv[1] + ".txt", "a")
+            f_yr_graph = open("unprocessed_data/gs_collaboration_yearly_graph" + sys.argv[1] + ".txt", "a")
         else:
             f_yr_graph = open("unprocessed_data/gs_collaboration_yearly_graph.txt", "a")
             f_graph = open("unprocessed_data/gs_collaboration_graph.txt", "a")

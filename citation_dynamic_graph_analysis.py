@@ -29,8 +29,8 @@ def graph_metrics(G):
 
 
 min_year = 1990
-# max_year = 2015
-max_year = 1993
+max_year = 2015
+
 
 
 f_dyn =open("processed_data/gs_collaboration_yearly_graph.txt", "r")
@@ -129,6 +129,8 @@ for current_yr in range(min_year, max_year+1):
 print num_node_seq
 print num_edge_seq
 print per_giant_seq
+
+print effective_diamater_seq
 if (save_figures):
     #The fraction of nodes that are part of the giant connected component over time
 
@@ -185,20 +187,20 @@ graph_metrics(G_all)
 
 
 
-##Analysis of seperate year
-for current_yr in range(min_year, max_year+1):
-	print current_yr, ":",
-	G_tmp = Graph()
-	for x in all_yr_nodes:
-		y=x.split(" ")
-		#print y
-		if (int(y[0]) == current_yr):
-			G_tmp.add_node(int(y[1]))
-	for x in all_yr_edges:
-		y=x.split(",")
-		if (int(y[0]) == current_yr):
-			G_tmp.add_edge(int(y[1]), int(y[2]))
-	graph_metrics(G_tmp)
+# ##Analysis of seperate year
+# for current_yr in range(min_year, max_year+1):
+# 	print current_yr, ":",
+# 	G_tmp = Graph()
+# 	for x in all_yr_nodes:
+# 		y=x.split(" ")
+# 		#print y
+# 		if (int(y[0]) == current_yr):
+# 			G_tmp.add_node(int(y[1]))
+# 	for x in all_yr_edges:
+# 		y=x.split(",")
+# 		if (int(y[0]) == current_yr):
+# 			G_tmp.add_edge(int(y[1]), int(y[2]))
+# 	graph_metrics(G_tmp)
 
 #for i in range(0, max_node_id+1):
 	##all_domain[i] = 1

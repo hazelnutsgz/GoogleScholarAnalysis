@@ -45,18 +45,18 @@ def subset_graph_metrics(G, pagerank_dict, node_list):
     print len(node_list), median_deg, '%.3f' % avg_deg, '%.3f' % avg_cc, numpy.average(pagerank_values)
     return
 
-f_nodes = open("processed_data/gs_graph_nodes.txt", "r")
-f_edges = open("processed_data/gs_collaboration_graph.txt", "r")
+f_nodes = open("gs_graph_nodes.txt", "r")
+f_edges = open("gs_collaboration_graph.txt", "r")
 
 
 f_country_nodes = open("gs_country_graph_nodes.txt", "r")
-f_country_nodes = open("processed_data/gs_title.txt", "r")
-f_profile_nodes = open("processed_data/gs_profile.txt", "r")
+f_country_nodes = open("gs_title.txt", "r")
+f_profile_nodes = open("gs_profile.txt", "r")
 
 
 
-#f_yr_nodes = open("gs_graph_yr_nodes.txt", "r")
-#f_yr_edges = open("gs_collaboration_yearly_graph.txt", "r")
+f_yr_nodes = open("gs_graph_yr_nodes.txt", "r")
+f_yr_edges = open("gs_collaboration_yearly_graph.txt", "r")
 
 all_nodes = f_nodes.read().split("\n"); all_nodes = all_nodes[:-1]
 all_edges = f_edges.read().split("\n"); all_edges = all_edges[:-1]
@@ -138,7 +138,7 @@ print '== Gender =='
 
 # please run: "python citation_name_to_gender.py > gs_gender.txt &" first
 
-f_gender_nodes = open("processed_data/gs_gender.txt", "r")
+f_gender_nodes = open("gs_gender.txt", "r")
 all_gender = f_gender_nodes.read().split("\n"); all_gender = all_gender[:-1]
 current_idx = 0
 male_IDs=[]; male_deg = []; male_pagerank=[]; male_total = []; male_hidx = []; male_gidx = [];
@@ -191,9 +191,9 @@ print '-> Avg. Total= %.2f' % numpy.average(all_phy_total), 'Avg. H-idx= %.2f' %
 
 
 #pagerank_seq = pagerank_dict.values()
-f_output_all_hidx = open("all_hidx.txt", "w")
-f_output_all_gidx = open("all_gidx.txt", "w")
-f_output_all_pagerank = open("all_pagerank.txt", "w")
+f_output_all_hidx = open("unprocessed_data/all_hidx.txt", "w")
+f_output_all_gidx = open("unprocessed_data/all_gidx.txt", "w")
+f_output_all_pagerank = open("unprocessed_data/all_pagerank.txt", "w")
 for ii in range(0, len(all_hidx)):
     f_output_all_hidx.write(str(all_hidx[ii])+'\n')
     f_output_all_gidx.write(str(all_gidx[ii])+'\n')
