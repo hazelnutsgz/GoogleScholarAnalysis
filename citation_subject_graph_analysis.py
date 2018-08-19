@@ -52,14 +52,18 @@ def subset_graph_metrics(G, node_list, meta_info):
 	elif (meta_info == 6):
 		numpy.savetxt('result_phy_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
 		numpy.savetxt('result_phy_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
+	elif (meta_info == 7):
+		numpy.savetxt('result_soc_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
+		numpy.savetxt('result_soc_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
+	
 	return
 
 
-f_nodes = open("processed_data/gs_graph_nodes.txt", "r")
-f_edges = open("processed_data/gs_collaboration_graph.txt", "r")
+f_nodes = open("gs_graph_nodes.txt", "r")
+f_edges = open("gs_collaboration_graph.txt", "r")
 
 #f_country_nodes = open("gs_country_graph_nodes.txt", "r")
-f_profiles = open("processed_data/gs_profile.txt", "r")
+f_profiles = open("gs_profile.txt", "r")
 
 
 #f_yr_nodes = open("gs_graph_yr_nodes.txt", "r")
@@ -73,8 +77,8 @@ all_profiles = f_profiles.read().split("\n"); all_profiles = all_profiles[:-1]
 
 G_all = Graph()
 
-for x in all_nodes:
-	G_all.add_node(int(x))
+for x in all_profiles:
+	G_all.add_node(int(x[0]))
 for x in all_edges:
 	y = x.split(",")
 	G_all.add_edge(int(y[0]), int(y[1]))
@@ -85,22 +89,24 @@ graph_metrics(G_all)
 # gs_profile
 # 58755 86 6 8 0 1
 
-for current_subject in range(4, 7):
+for current_subject in range(4, 8):
 	print current_subject, ":",
 	
 	curr_node_list = []
-	for ii in range(0, len(all_nodes)):
+	for ii in range(0, len(all_profiles)):
 		xx = all_profiles[ii]
 		yy = xx.split(" ")
 		if (int(yy[current_subject]) == 1):
 			curr_node_list.append(ii)
 
-	subset_graph_metrics(G_all, curr_node_list, current_subject)
+	# subset_graph_metrics(G_all, curr_node_list, current_subject)
 
 all_citation = []; all_h_idx = []; all_g_idx = []; cs_citation = []; cs_h_idx = []; cs_g_idx = []; bio_citation = []; bio_h_idx = []; bio_g_idx = []; phy_citation = []; phy_h_idx = []; phy_g_idx = [];
-for ii in range(0, len(all_nodes)):
+soc_citation = []; soc_h_idx = []; soc_g_idx = [];
+for ii in range(0, len(all_profiles)):
 	xx = all_profiles[ii]
 	yy = xx.split(" ")
+	print(yy)
 	tmp_citation = int(yy[1]); tmp_h_idx = int(yy[2]); tmp_g_idx = int(yy[3])
 	all_citation.append(tmp_citation); all_h_idx.append(tmp_h_idx); all_g_idx.append(tmp_g_idx)
 	if (int(yy[4]) == 1):
@@ -109,6 +115,10 @@ for ii in range(0, len(all_nodes)):
 		bio_citation.append(tmp_citation); bio_h_idx.append(tmp_h_idx); bio_g_idx.append(tmp_g_idx)
 	if (int(yy[6]) == 1):
 		phy_citation.append(tmp_citation); phy_h_idx.append(tmp_h_idx); phy_g_idx.append(tmp_g_idx)
+	if (int(yy[7]) == 1):
+		soc_citation.append(tmp_citation); soc_h_idx.append(tmp_h_idx); soc_g_idx.append(tmp_g_idx)
+
+import pdb; pdb.set_trace()
 
 numpy.savetxt('result_all_citation_cdf.txt', get_per_from_seq(sorted(all_citation)), fmt = "%.2f")
 numpy.savetxt('result_all_h_idx_cdf.txt', get_per_from_seq(sorted(all_h_idx)), fmt = "%.2f")
@@ -126,11 +136,15 @@ numpy.savetxt('result_phy_citation_cdf.txt', get_per_from_seq(sorted(phy_citatio
 numpy.savetxt('result_phy_h_idx_cdf.txt', get_per_from_seq(sorted(phy_h_idx)), fmt = "%.2f")
 numpy.savetxt('result_phy_g_idx_cdf.txt', get_per_from_seq(sorted(phy_g_idx)), fmt = "%.2f")
 
+numpy.savetxt('result_soc_citation_cdf.txt', get_per_from_seq(sorted(soc_citation)), fmt = "%.2f")
+numpy.savetxt('result_soc_h_idx_cdf.txt', get_per_from_seq(sorted(soc_h_idx)), fmt = "%.2f")
+numpy.savetxt('result_soc_g_idx_cdf.txt', get_per_from_seq(sorted(soc_g_idx)), fmt = "%.2f")
 		
 print 'Average (t/h/g): ', numpy.average(all_citation), numpy.average(all_h_idx), numpy.average(all_g_idx)
 print 'cs Average (t/h/g): ', numpy.average(cs_citation), numpy.average(cs_h_idx), numpy.average(cs_g_idx)
 print 'Bio Average (t/h/g): ', numpy.average(bio_citation), numpy.average(bio_h_idx), numpy.average(bio_g_idx)
 print 'Physics Average (t/h/g): ', numpy.average(phy_citation), numpy.average(phy_h_idx), numpy.average(phy_g_idx)
+print 'Social Average (t/h/g): ', numpy.average(soc_citation), numpy.average(soc_h_idx), numpy.average(soc_g_idx)
 '''
 print 'STD (t/h/g): ', numpy.std(all_citation), numpy.std(all_h_idx), numpy.std(all_g_idx)
 print 'cs STD (t/h/g): ', numpy.std(cs_citation), numpy.std(cs_h_idx), numpy.std(cs_g_idx)
@@ -140,5 +154,5 @@ print 'Median (t/h/g): ', numpy.median(all_citation), numpy.median(all_h_idx), n
 print 'cs Median (t/h/g): ', numpy.median(cs_citation), numpy.median(cs_h_idx), numpy.median(cs_g_idx)	
 print 'Bio Median (t/h/g): ', numpy.median(bio_citation), numpy.median(bio_h_idx), numpy.median(bio_g_idx)
 print 'Physics Median (t/h/g): ', numpy.median(phy_citation), numpy.median(phy_h_idx), numpy.median(phy_g_idx)
-
+print 'Sociology Median (t/h/g): ', numpy.median(soc_citation), numpy.median(soc_h_idx), numpy.median(soc_g_idx)
 

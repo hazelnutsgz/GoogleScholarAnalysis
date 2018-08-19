@@ -83,6 +83,7 @@ aau_email = ['bu.edu',
 cs_keywords = ['distributed systems', 'mobile', 'wireless', 'operating systems', 'robotics', 'programming', 'algorithms', 'artificial intelligence', 'comput', 'cryptography', 'databases', 'data mining', 'information', 'machine learning', 'network', 'software engineering', 'web']
 bio_keywords = ['bio', 'neuro', 'medic', 'life sci', 'genetic', 'epidemiology', 'molecular', 'genomics', 'brain', 'clinical', 'psychiatry', 'pediatrics']
 physics_keywords = ['physics']
+social_keywords = ['social', "culture", "sociology"]
 
 
 def has_cs_keyword(input_keyword_str):
@@ -103,7 +104,11 @@ def has_physics_keyword(input_keyword_str):
 			return 1
 	return 0
 
-
+def has_social_keyword(input_keyword_str):
+	for x in social_keywords:
+		if (x in input_keyword_str):
+			return 1
+	return 0
 
 def getaau(emailstr):
 	for i in range(0, len(aau_email)):

@@ -89,7 +89,6 @@ country_list = []
  
 for x in filename:
     if (x[-6:]=='.parse'):# and (x[0] in 'DEFGHIJKLMNOPQRSdefghijklmnopqrs'):
-        print x,
         x_name = os.path.join('gs_result/', x);
         lines=open(x_name, "r").read().split('\n')
         #close(x)
@@ -212,17 +211,18 @@ for x in filename:
             f_profile.write('0 ')
 
         if (verified_str.find("phys") >= 0 or affilation_str.find("physics") >= 0 or has_physics_keyword(keyword_str) == 1 ):
-            f_profile.write('1')
+            f_profile.write('1 ')
         else:
-            f_profile.write('0')
+            f_profile.write('0 ')
 
-        ##Socialogy
-        if (verified_str.find("soc") >= 0 or affilation_str.find("physics") >= 0 or has_physics_keyword(keyword_str) == 1 ):
+        ##Sociology
+        if (verified_str.find("soc") >= 0 or affilation_str.find("soci") >= 0 or has_social_keyword(keyword_str) == 1 ):
             f_profile.write('1\n')
+            print ("catch social")
         else:
             f_profile.write('0\n')
 
-        total=total+1
+        total = total +1
  
 f_profile.close()
 f_name.close(); f_year.close(); f_title.close()
@@ -238,7 +238,7 @@ print '####'
  
 #year_summary(year_user)
  
-compute_collaboration_graph = 0
+compute_collaboration_graph = 1
  
 if (compute_collaboration_graph == 1):
     print datetime.now()
