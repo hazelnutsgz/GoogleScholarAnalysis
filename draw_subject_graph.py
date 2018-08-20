@@ -27,6 +27,7 @@ def cdf_plot_in_the_same_pic(data_list, titles, xlabel, ylabel, title, plt, form
     plt.legend()
     if filename != "none":
         plt.savefig("draw_cdf/" + filename)
+    plt.close()
 
 if __name__ == '__main__':
     subjects = ["cs", "bio", "soc", "phy"]
