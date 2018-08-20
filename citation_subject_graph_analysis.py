@@ -99,7 +99,7 @@ for current_subject in range(4, 8):
 		if (int(yy[current_subject]) == 1):
 			curr_node_list.append(ii)
 
-	# subset_graph_metrics(G_all, curr_node_list, current_subject)
+	subset_graph_metrics(G_all, curr_node_list, current_subject)
 
 all_citation = []; all_h_idx = []; all_g_idx = []; cs_citation = []; cs_h_idx = []; cs_g_idx = []; bio_citation = []; bio_h_idx = []; bio_g_idx = []; phy_citation = []; phy_h_idx = []; phy_g_idx = [];
 soc_citation = []; soc_h_idx = []; soc_g_idx = [];
@@ -118,7 +118,6 @@ for ii in range(0, len(all_profiles)):
 	if (int(yy[7]) == 1):
 		soc_citation.append(tmp_citation); soc_h_idx.append(tmp_h_idx); soc_g_idx.append(tmp_g_idx)
 
-import pdb; pdb.set_trace()
 
 numpy.savetxt('result_all_citation_cdf.txt', get_per_from_seq(sorted(all_citation)), fmt = "%.2f")
 numpy.savetxt('result_all_h_idx_cdf.txt', get_per_from_seq(sorted(all_h_idx)), fmt = "%.2f")
