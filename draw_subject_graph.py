@@ -35,11 +35,12 @@ if __name__ == '__main__':
             ["result_", "_citation_cdf.txt"],
             ["result_", "_g_idx_cdf.txt"],
             ["result_", "_deg_cdf.txt"],
-            ["result_", "_h_idx_cdf.txt"]
+            ["result_", "_h_idx_cdf.txt"],
+            ["result_", "_cc_cdf.txt"]
         ]
     pic_name = ["citation_cdf.png", "g_index_cdf.png",
-                "deg_cdf.png", "h_index_cdf.png"]
-    titles = ["Citation", "G_Index", "Degree", "H_Index"]
+                "deg_cdf.png", "h_index_cdf.png", "cc_cdf.png"]
+    titles = ["Citation", "G_Index", "Degree", "H_Index", "Clustering Coefficient"]
     for (index, index_type) in enumerate(index_types):
         data_list = []
         for subject in subjects:

@@ -123,6 +123,7 @@ numpy.savetxt('result_all_citation_cdf.txt', get_per_from_seq(sorted(all_citatio
 numpy.savetxt('result_all_h_idx_cdf.txt', get_per_from_seq(sorted(all_h_idx)), fmt = "%.2f")
 numpy.savetxt('result_all_g_idx_cdf.txt', get_per_from_seq(sorted(all_g_idx)), fmt = "%.2f")
 
+
 numpy.savetxt('result_cs_citation_cdf.txt', get_per_from_seq(sorted(cs_citation)), fmt = "%.2f")
 numpy.savetxt('result_cs_h_idx_cdf.txt', get_per_from_seq(sorted(cs_h_idx)), fmt = "%.2f")
 numpy.savetxt('result_cs_g_idx_cdf.txt', get_per_from_seq(sorted(cs_g_idx)), fmt = "%.2f")
