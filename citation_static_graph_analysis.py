@@ -49,9 +49,9 @@ f_nodes = open("processed_data/gs_graph_nodes.txt", "r")
 f_edges = open("processed_data/gs_collaboration_graph.txt", "r")
 
 
-f_country_nodes = open("gs_country_graph_nodes.txt", "r")
+f_country_nodes = open("processed_data/gs_country_graph_nodes.txt", "r")
 f_country_nodes = open("processed_data/gs_title.txt", "r")
-f_profile_nodes = open("processed_data/gs_profile.txt", "r")
+f_profile_nodes = open("gs_profile.txt", "r")
 
 
 
@@ -79,17 +79,17 @@ for x in all_edges:
 
 # Discipline-based Data Aggregation #
 
-all_cs_nodes = []; all_bio_nodes = []; all_phy_nodes = [];
+all_cs_nodes = []; all_bio_nodes = []; all_phy_nodes = []; all_social_nodes = [];
 all_cs_total = []; all_cs_hidx = []; all_cs_gidx = [];
 all_bio_total = []; all_bio_hidx = []; all_bio_gidx = [];
 all_phy_total = []; all_phy_hidx = []; all_phy_gidx = [];
-
+all_social_total = []; all_social_hidx = []; all_social_gidx = [];
 
 all_total = []; all_hidx = []; all_gidx = [];
 
 for x in all_profiles:
     y = x.split(" ")
-    cs = int(y[4]); bio = int(y[5]); phy = int(y[6])
+    cs = int(y[4]); bio = int(y[5]); phy = int(y[6]); social = int(y[7])
     all_total.append(int(y[1])); all_hidx.append(int(y[2])); all_gidx.append(int(y[3]))
     if cs:
         all_cs_nodes.append(int(y[0]))
@@ -106,8 +106,13 @@ for x in all_profiles:
         all_phy_total.append(int(y[1]))
         all_phy_hidx.append(int(y[2]))
         all_phy_gidx.append(int(y[3]))
+    if social:
+        all_social_nodes.append(int(y[0]))
+        all_social_total.append(int(y[1]))
+        all_social_hidx.append(int(y[2]))
+        all_social_gidx.append(int(y[3]))
 
-print len(all_cs_nodes), len(all_bio_nodes), len(all_phy_nodes)
+print len(all_cs_nodes), len(all_bio_nodes), len(all_phy_nodes), len(all_social_nodes)
 
 
 node_country_id = []
@@ -188,6 +193,9 @@ print '-> Avg. Total= %.2f' % numpy.average(all_bio_total), 'Avg. H-idx= %.2f' %
 print 'Physics:',
 subset_graph_metrics(G_all, pagerank_dict, all_phy_nodes)
 print '-> Avg. Total= %.2f' % numpy.average(all_phy_total), 'Avg. H-idx= %.2f' % numpy.average(all_phy_hidx), 'Avg. G-idx= %.2f' % numpy.average(all_phy_gidx)
+print 'Sociology:',
+subset_graph_metrics(G_all, pagerank_dict, all_social_nodes)
+print '-> Avg. Total= %.2f' % numpy.average(all_social_total), 'Avg. H-idx= %.2f' % numpy.average(all_social_hidx), 'Avg. G-idx= %.2f' % numpy.average(all_social_gidx)
 
 
 #pagerank_seq = pagerank_dict.values()
