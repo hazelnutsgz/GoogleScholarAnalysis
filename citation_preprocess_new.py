@@ -67,22 +67,22 @@ neuro_total_citation = []; neuro_h_index = []; neuro_i10_index = []; neuro_g_ind
 paper_data = {}
 year_user = set([]) #element: (1950, 1), (2012, 50), (yr, id)
  
-f_profile = open("gs_profile.txt", "w")
-f_name = open("gs_name.txt", "w")
-f_year = open("gs_earliest_year.txt", "w")
-f_google_id = open("gs_google_id.txt", "w")
+f_profile = open("process_data/gs_profile.txt", "w")
+f_name = open("process_data/gs_name.txt", "w")
+f_year = open("process_data/gs_earliest_year.txt", "w")
+f_google_id = open("process_data/gs_google_id.txt", "w")
  
  
-f_h_age = open("gs_h_age.txt", "w") # h-index vs experience
-f_g_age = open("gs_g_age.txt", "w") # g-index vs experience
-f_t_age = open("gs_t_age.txt", "w") # total citation vs experience
+f_h_age = open("process_data/gs_h_age.txt", "w") # h-index vs experience
+f_g_age = open("process_data/gs_g_age.txt", "w") # g-index vs experience
+f_t_age = open("process_data/gs_t_age.txt", "w") # total citation vs experience
  
  
  
-f_title = open("gs_title.txt", "w") # academic title
-f_h_idx = open("gs_h_idx.txt", "w")
-f_g_idx = open("gs_g_idx.txt", "w")
-f_t_idx = open("gs_t_idx.txt", "w")
+f_title = open("process_data/gs_title.txt", "w") # academic title
+f_h_idx = open("process_data/gs_h_idx.txt", "w")
+f_g_idx = open("process_data/gs_g_idx.txt", "w")
+f_t_idx = open("process_data/gs_t_idx.txt", "w")
 #f_subject = open("gs_subject.txt", "w")
  
 country_list = []
@@ -238,7 +238,7 @@ print '####'
  
 #year_summary(year_user)
  
-compute_collaboration_graph = 1
+compute_collaboration_graph = 0
  
 if (compute_collaboration_graph == 1):
     print datetime.now()
