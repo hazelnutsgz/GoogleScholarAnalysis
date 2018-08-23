@@ -84,20 +84,24 @@ angchen = [1, 7, 18, 42, 39, 75, 45]
 chunyipeng = [111, 113, 204, 189, 289, 300, 364, 460, 508, 442, 300]
 
 
-def see_a_scholar():
+def see_a_scholar(name, index_name, index_list):
 
-plt = get_plt()
-ax=plt.gca()
-ax.xaxis.set_major_formatter(get_formatter())
-ax.set_xlabel("Experience", fontsize=12)
-ax.set_ylabel("Total Index", fontsize=12)
-plt.title("The Roadmap for AngChen")
-plt.plot([i for i in range(1,21)], t_20_with_year, color='green', label = 'Mediocre')
-plt.plot([i for i in range(1, 21)], t_50_with_year, color='blue', label = 'Normal')
-plt.plot([i for i in range(1, 21)], t_80_with_year, color='red', label = 'Excellent')
-plt.plot(angchen, color = 'yellow', label = 'Somebody')
-plt.legend(loc='best')
-plt.show()
+	plt = get_plt()
+	ax=plt.gca()
+	ax.xaxis.set_major_formatter(get_formatter())
+	ax.set_xlabel("Experience", fontsize=12)
+	ax.set_ylabel(index_name, fontsize=12)
+	plt.title("The Roadmap for " + name)
+	lens = len(index_list)
+	plt.plot(t_20_with_year[0: lens], color='green', label = 'Mediocre')
+	plt.plot(t_50_with_year[0 : lens], color='blue', label = 'Normal')
+	plt.plot(t_80_with_year[0 : lens], color='red', label = 'Excellent')
+	plt.plot(index_list, color = 'yellow', label = 'Somebody')
+	plt.legend(loc='best')
+	plt.savefig("evaluate_" + name + ".png")
+	plt.close()
 
-
+if __name__ == '__main__':
+	see_a_scholar("AngChen", "Citation", [1, 7, 18, 42, 39, 75, 45])
+	see_a_scholar("Chunyi Peng", "Citation", [111, 113, 204, 189, 289, 300, 364, 460, 508, 442, 300])
 
