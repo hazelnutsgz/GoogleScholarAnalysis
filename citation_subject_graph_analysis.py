@@ -40,30 +40,35 @@ def subset_graph_metrics(G, node_list, meta_info):
 	median_deg = numpy.median(sorted_deg)
 	avg_deg = numpy.average(sorted_deg)
 	sorted_cc = sorted(networkx.clustering(G, node_list).values())
+	sorted_pr = sorted(pagerank(G,alpha = 0.8).values())
+	avg_pr = numpy.average(sorted_pr)
+	med_pr = numpy.median(sorted_pr)
+	import pdb; pdb.set_trace()
 	avg_cc = numpy.average(sorted_cc)# networkx.average_clustering(G)
+	med_cc = numpy.median(sorted_cc)	
 	#print G.number_of_nodes(), G.number_of_edges(), G.number_of_edges() * 2.0 / (G.number_of_nodes() * (G.number_of_nodes() - 1)), median_deg, "%.2f" % avg_deg, "%.2f" % avg_cc
-	print len(node_list), median_deg, avg_deg, avg_cc
-	if (meta_info == 4): # computer science
-		numpy.savetxt('result_cs_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
-		numpy.savetxt('result_cs_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
-	elif (meta_info == 5): # bio
-		numpy.savetxt('result_bio_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
-		numpy.savetxt('result_bio_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
-	elif (meta_info == 6):
-		numpy.savetxt('result_phy_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
-		numpy.savetxt('result_phy_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
-	elif (meta_info == 7):
-		numpy.savetxt('result_soc_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
-		numpy.savetxt('result_soc_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
+	print len(node_list), median_deg, avg_deg, avg_cc, med_cc, avg_pr, med_pr
+	# if (meta_info == 4): # computer science
+	# 	numpy.savetxt('result_cs_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
+	# 	numpy.savetxt('result_cs_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
+	# elif (meta_info == 5): # bio
+	# 	numpy.savetxt('result_bio_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
+	# 	numpy.savetxt('result_bio_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
+	# elif (meta_info == 6):
+	# 	numpy.savetxt('result_phy_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
+	# 	numpy.savetxt('result_phy_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
+	# elif (meta_info == 7):
+	# 	numpy.savetxt('result_soc_deg_cdf.txt', get_per_from_seq(sorted_deg), fmt = "%.2f")
+	# 	numpy.savetxt('result_soc_cc_cdf.txt', get_per_from_seq(sorted_cc), fmt = "%.2f")
 	
-	return
+	# return
 
 
-f_nodes = open("gs_graph_nodes.txt", "r")
-f_edges = open("gs_collaboration_graph.txt", "r")
+f_nodes = open("processed_data/gs_graph_nodes.txt", "r")
+f_edges = open("processed_data/gs_collaboration_graph.txt", "r")
 
 #f_country_nodes = open("gs_country_graph_nodes.txt", "r")
-f_profiles = open("gs_profile.txt", "r")
+f_profiles = open("process_data/gs_profile.txt", "r")
 
 
 #f_yr_nodes = open("gs_graph_yr_nodes.txt", "r")
@@ -90,6 +95,8 @@ graph_metrics(G_all)
 # 58755 86 6 8 0 1
 
 for current_subject in range(4, 8):
+	G_subject = Graph()
+
 	print current_subject, ":",
 	
 	curr_node_list = []
@@ -98,15 +105,22 @@ for current_subject in range(4, 8):
 		yy = xx.split(" ")
 		if (int(yy[current_subject]) == 1):
 			curr_node_list.append(ii)
+			G_subject.add_node(ii)
 
-	subset_graph_metrics(G_all, curr_node_list, current_subject)
+	for edge in all_edges:
+		y = edge.split(",")
+		profile_1 = all_profiles[int(y[0])].split(" ")
+		profile_2 = all_profiles[int(y[1])].split(" ")
+		if (profile_1[current_subject] == '1' and profile_2[current_subject] == '1') or (profile_1[current_subject] == '1' and profile_2[current_subject] == '1'):
+			G_subject.add_edge(int(y[0]), int(y[1]))
+
+	subset_graph_metrics(G_subject, curr_node_list, current_subject)
 
 all_citation = []; all_h_idx = []; all_g_idx = []; cs_citation = []; cs_h_idx = []; cs_g_idx = []; bio_citation = []; bio_h_idx = []; bio_g_idx = []; phy_citation = []; phy_h_idx = []; phy_g_idx = [];
 soc_citation = []; soc_h_idx = []; soc_g_idx = [];
 for ii in range(0, len(all_profiles)):
 	xx = all_profiles[ii]
 	yy = xx.split(" ")
-	print(yy)
 	tmp_citation = int(yy[1]); tmp_h_idx = int(yy[2]); tmp_g_idx = int(yy[3])
 	all_citation.append(tmp_citation); all_h_idx.append(tmp_h_idx); all_g_idx.append(tmp_g_idx)
 	if (int(yy[4]) == 1):
