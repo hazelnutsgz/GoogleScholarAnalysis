@@ -15,12 +15,12 @@ from draw_hist import format_data, get_formatter, get_plt
 
 def cdf_plot_in_the_same_pic(data_list, titles, xlabel, ylabel, title, plt, formatter, filename="none"):
     ax=plt.gca()
-    
+    plt.figure()
     ax.xaxis.set_major_formatter(formatter) 
-    ax.set_xlabel(xlabel, fontsize=12)
-    ax.set_ylabel(ylabel, fontsize=12)
+    plt.xlabel(xlabel, fontsize=12)
+    plt.ylabel(ylabel, fontsize=12)
     plt.title(title)
-    plt.figure(figsize=(6, 6.5))
+    
     plt.rcParams['savefig.dpi'] = 1000
     marker_list = ["o", "v", "+", "^"]
     for index in range(len(data_list)):
@@ -54,5 +54,5 @@ if __name__ == '__main__':
             [x, s] = format_data(v, 100)
             data_list.append((x, s))
         cdf_plot_in_the_same_pic(data_list, subjects, \
-            'Citation', 'Percentage(%)', \
+            titles[index], 'Percentage(%)', \
                 titles[index], get_plt(), get_formatter(), pic_name[index]) 
