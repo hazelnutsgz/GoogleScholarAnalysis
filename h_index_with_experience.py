@@ -2,9 +2,22 @@ import numpy
 from citation_library import *
 from draw_hist import get_formatter, get_plt
 
-f_h_age = open("process_data/gs_h_age.txt", "r") # h-index vs experience
-f_g_age = open("process_data/gs_g_age.txt", "r") # g-index vs experience
-f_t_age = open("process_data/gs_t_age.txt", "r") # total vs experience
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
+
+import numpy as np
+import sys
+from matplotlib import ticker
+formatter = ticker.ScalarFormatter(useMathText=True)
+formatter.set_scientific(True) 
+formatter.set_powerlimits((-1,1)) 
+matplotlib.rcParams['mathtext.fontset'] = 'stix'
+matplotlib.rcParams['font.family'] = 'STIXGeneral'
+
+f_h_age = open("gs_h_age.txt", "r") # h-index vs experience
+f_g_age = open("gs_g_age.txt", "r") # g-index vs experience
+f_t_age = open("gs_t_age.txt", "r") # total vs experience
 
 all_h = f_h_age.read().split("\n"); all_h = all_h[:-1]
 all_g = f_g_age.read().split("\n"); all_g = all_g[:-1]
@@ -93,10 +106,10 @@ def see_a_scholar(name, index_name, index_list):
 	ax.set_ylabel(index_name, fontsize=12)
 	plt.title("The Roadmap for " + name)
 	lens = len(index_list)
-	plt.plot(t_20_with_year[0: lens], color='green', label = 'Mediocre')
-	plt.plot(t_50_with_year[0 : lens], color='blue', label = 'Normal')
-	plt.plot(t_80_with_year[0 : lens], color='red', label = 'Excellent')
-	plt.plot(index_list, color = 'yellow', label = 'Somebody')
+	plt.plot(t_20_with_year[0: lens], color='black', marker='x', label = 'Mediocre')
+	plt.plot(t_50_with_year[0 : lens], color='black', marker='o', label = 'Normal')
+	plt.plot(t_80_with_year[0 : lens], color='black',  marker='v', label = 'Excellent')
+	plt.plot(index_list, color='black', marker='.', label = 'Somebody')
 	plt.legend(loc='best')
 	plt.savefig("evaluate_" + name + ".png")
 	plt.close()
