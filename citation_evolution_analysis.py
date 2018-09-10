@@ -1,9 +1,9 @@
 import numpy
 from citation_library import *
 
-f_h_age = open("process_data/gs_h_age.txt", "r") # h-index vs experience
-f_g_age = open("process_data/gs_g_age.txt", "r") # g-index vs experience
-f_t_age = open("process_data/gs_t_age.txt", "r") # total vs experience
+f_h_age = open("gs_h_age.txt", "r") # h-index vs experience
+f_g_age = open("gs_g_age.txt", "r") # g-index vs experience
+f_t_age = open("gs_t_age.txt", "r") # total vs experience
 
 all_h = f_h_age.read().split("\n"); all_h = all_h[:-1]
 all_g = f_g_age.read().split("\n"); all_g = all_g[:-1]

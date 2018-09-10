@@ -1,20 +1,27 @@
 import sys
 sys.path.append('/home/home4/ychen/Code/python-lib') # add the path of networkx in Duke-CS cluster
 
-# import matplotlib
-# matplotlib.use('TkAgg')
-# import matplotlib.pyplot as plt
+import matplotlib
+matplotlib.use('TkAgg')
+import matplotlib.pyplot as plt
 
 import random
 from networkx import *
-from draw_hist import get_plt, get_formatter
 
 import numpy
 from citation_library import *
+from matplotlib import ticker
+
+formatter = ticker.ScalarFormatter(useMathText=True)
+formatter.set_scientific(True) 
+formatter.set_powerlimits((-1,1)) 
+matplotlib.rcParams['mathtext.fontset'] = 'stix'
+matplotlib.rcParams['font.family'] = 'STIXGeneral'
+from draw_hist import format_data, get_formatter, get_plt
 
 #import matplotlib.pyplot as plt
 
-save_figures = True
+save_figures = False
 
 def effective_diamater(path_length_seq):
     sorted_seq = sorted(path_length_seq)
@@ -29,7 +36,7 @@ def graph_metrics(G):
 
 
 
-min_year = 1990
+min_year = 2015
 max_year = 2015
 
 
@@ -63,6 +70,8 @@ print num_line_no_year * 100.0/total_line
 
 print 'total nodes:', len(year_info)
 print 'year', ':', '# of nodes', '# of edges', '# edges/# nodes', 'Avg. degree', 'Giant Component (%)'
+
+
 
 num_node_seq = []; num_edge_seq = []; per_giant_seq = []; effective_diamater_seq = [];
 
@@ -124,8 +133,8 @@ for current_yr in range(min_year, max_year+1):
 #    current_effective_diameter = diameter(Largest_component)
     print '90th d:', current_effective_diameter,
     effective_diamater_seq.append(current_effective_diameter)
-    r=degree_assortativity_coefficient(G_current)
-    print("Assortativity coefficient: %3.2f"%r)
+    # r=degree_assortativity_coefficient(G_current)
+    # print("Assortativity coefficient: %3.2f"%r)
 
 print num_node_seq
 print num_edge_seq
@@ -135,16 +144,16 @@ print effective_diamater_seq
 if (save_figures):
     #The fraction of nodes that are part of the giant connected component over time
     plt = get_plt()
-    ax=plt.gca()
-    ax.xaxis.set_major_formatter(get_formatter()) 
+    ax = plt.gca()  
+    ax.xaxis.set_major_formatter(formatter) 
     ax.set_xlabel(xlabel, fontsize=12)
     ax.set_ylabel(ylabel, fontsize=12)
+    
     plt.figure()
     plt.plot(range(min_year, max_year+1), per_giant_seq, '-o')
     plt.xlabel('Year')
     plt.ylabel('Percenage (%)')
     plt.ylim([0, 60])
-    plt.title("Evolution of Giant")
     plt.savefig('gscholar_evolution_giant.png')
 
     plt.figure()
@@ -152,27 +161,21 @@ if (save_figures):
     plt.xlabel('Number of Nodes')
     plt.ylabel('Number of Edges')
     plt.ylim([100, 1000000])
-    plt.title("Evolution of Density")
     #    plt.title('Probability Density Function')
     plt.savefig('gscholar_evolution_density.png')
 
-    # plt.figure()
-    # plt.plot(range(min_year, max_year+1), effective_diamater_seq, '-o')
-    # plt.xlabel('Year')
-    # plt.ylabel('Effective Diameter')
-    # plt.title("Evolution of Diameter")
-    # plt.savefig('scholar_evolution_effective_diameter.png')
+    plt.figure()
+    plt.plot(range(min_year, max_year+1), effective_diamater_seq, '-o')
+    plt.xlabel('Year')
+    plt.ylabel('Effective Diameter')
+    plt.savefig('scholar_evolution_effective_diameter.png')
 
     plt.figure()
     plt.plot(range(min_year, max_year+1), sorted(effective_diamater_seq, reverse=True), '-o')
     plt.xlabel('Year')
     plt.ylabel('Effective Diameter')
     plt.ylim([0, 20])
-    plt.title("Evolution of Diameter")
     plt.savefig('scholar_evolution_effective_diameter2.png')
-
-
-
 
 f_nodes = open("gs_graph_nodes.txt", "r")
 f_edges = open("gs_collaboration_graph.txt", "r")
